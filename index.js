@@ -31,14 +31,24 @@ function tostr(bytes) {
  */
 
 function uid(length) {
-  if (typeof window.crypto != 'undefined') {
-    return tostr(crypto.getRandomValues(new Uint8Array(length)));
-  } else {
-    var a = new Array(length);
-    for (var i = 0; i < length; i++) {
-      a[i] = Math.floor(Math.random() * 256);
+  if (typeof window != 'undefined') {
+    if (typeof window.crypto != 'undefined') {
+      return tostr(window.crypto.getRandomValues(new Uint8Array(length)));
+    } else {
+      var a = new Array(length);
+      for (var i = 0; i < length; i++) {
+        a[i] = Math.floor(Math.random() * 256);
+      }
+      return tostr(a);
     }
-    return tostr(a);
+  } else {
+    var crypto = require('cryp'+'to'); // avoid browserify polyfill
+    try {
+      return tostr(crypto.randomBytes(length));
+    } catch (e) {
+      // entropy sources are drained
+      return tostr(crypto.pseudoRandomBytes(length));
+    }
   }
 }
 
