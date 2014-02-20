@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "unique id component",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/component/uid.git"
